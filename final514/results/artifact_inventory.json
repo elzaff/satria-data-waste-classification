@@ -1,0 +1,72 @@
+[
+  {
+    "filename": "balanced_lr.joblib",
+    "bytes": 28559,
+    "sha256": "fe4876522ebc570f4af394dc041d4a67f7018b9ff06cef6f298e7a872dcbd404"
+  },
+  {
+    "filename": "features.npz",
+    "bytes": 47463688,
+    "sha256": "a72f261fae46ab124fa763e2f44cdce2f57204f6c934e8a2e36c8e2b8ed885ae"
+  },
+  {
+    "filename": "manifest_audited_final.csv",
+    "bytes": 2948260,
+    "sha256": "b0f1edd8cf655027993d13f14d9293fa46f28eeec17b02350e9b5176c1419783"
+  },
+  {
+    "filename": "manifest_changes.csv",
+    "bytes": 7720,
+    "sha256": "ec19d18753e192d78690b44d5b0ac5b54bb81490b715facd77b7e3b780d73eed"
+  },
+  {
+    "filename": "metrics.json",
+    "bytes": 2372,
+    "sha256": "81a94d10b90d72af9c994ae73b74dc289fa2ec029af4d5ad4004732b6624780f"
+  },
+  {
+    "filename": "naflex_audited.pt",
+    "bytes": 1711725501,
+    "sha256": "8fe2069ab5e7730fd45e5eb2bd97935676b997cefd579cdc70fd79dad492d81d"
+  },
+  {
+    "filename": "naflex_best.pt",
+    "bytes": 1711724127,
+    "sha256": "5421cf7209d3b3d1db32b0145bcfb4f96b66e9a3a4711180a402076dab4d34c4"
+  },
+  {
+    "filename": "pipeline_snapshot.py",
+    "bytes": 53166,
+    "sha256": "cb7fe7340424ff91a44f97de5d68c662548df92c3db2e5681c4b2d1a5880c797"
+  },
+  {
+    "filename": "preprocessor_config.json",
+    "bytes": 621,
+    "sha256": "ef8799db02b5919fe0d7d0e0990bea918262bd324a7abe865127d1672580fb65"
+  },
+  {
+    "filename": "probabilities.npz",
+    "bytes": 90156,
+    "sha256": "36dc7cba2cb5554904527c0e325778d879404237429ea5ce636402b0b7d6a880"
+  },
+  {
+    "filename": "run_metadata.json",
+    "bytes": 520,
+    "sha256": "257eccca6ac261bb77de04bc896bee887bdc0eb9cdf89aba5b633bf9af103cd1"
+  },
+  {
+    "filename": "submission.csv",
+    "bytes": 9112,
+    "sha256": "6626eb8664552bd6cf92439d3a570862d5facbbd61140e26a1b17139586737ba"
+  },
+  {
+    "filename": "training_history.jsonl",
+    "bytes": 1208,
+    "sha256": "35db8d09807276a54924765005ee2901029d4271b5660d922d7257a602fa65b6"
+  },
+  {
+    "filename": "validation_head_ablation.tsv",
+    "bytes": 391,
+    "sha256": "9e7b541627481c0631a6fdc14792cbb63c3dc587bf223798a162080eddc37e39"
+  }
+]

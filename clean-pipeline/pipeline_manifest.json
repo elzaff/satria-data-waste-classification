@@ -1,0 +1,407 @@
+{
+  "name": "Ambiguity-aware multi-expert visual classification pipeline",
+  "version": 4,
+  "seed": 2026,
+  "test_labels_used": false,
+  "architecture_components": [
+    {
+      "name": "official_data_protocol",
+      "purpose": "Validate official data and create leakage-safe group splits.",
+      "stages": ["prepare_official_data"]
+    },
+    {
+      "name": "global_visual_anchor",
+      "purpose": "Combine material, shape, and semantic representations for stable three-class predictions.",
+      "stages": [
+        "train_material_encoder",
+        "train_shape_encoder",
+        "train_augmented_shape_encoder",
+        "infer_augmented_shape_encoder",
+        "train_context_encoder",
+        "refine_context_encoder",
+        "build_probability_ensemble",
+        "build_material_context_fusion",
+        "train_high_resolution_context",
+        "refine_high_resolution_context"
+      ]
+    },
+    {
+      "name": "class_boundary_experts",
+      "purpose": "Inspect residual Recyclable-versus-Organic ambiguity without changing Electronic predictions.",
+      "stages": [
+        "train_boundary_specialist",
+        "train_directional_specialist",
+        "build_neighborhood_router",
+        "calibrate_class_boundary",
+        "build_semantic_consensus",
+        "build_boundary_consensus",
+        "extract_multiview_features",
+        "train_hierarchical_patch_experts"
+      ]
+    },
+    {
+      "name": "cross_fitted_decision_layer",
+      "purpose": "Select guarded corrections using official-train OOF predictions only.",
+      "stages": [
+        "fit_oof_decision_router",
+        "build_hierarchical_patch_consensus"
+      ]
+    }
+  ],
+  "sources": {
+    "modal_backbone_app.py": "8363f87fb30e55986ee1d96827c60bb1b22a5a21a4cfa3aeddee09705cb4e5bc",
+    "stages/01_material_encoder/stage.py": "90dfd71ac18af9173ac0e6938e5fc80aed18b1de0e5b7ea52d55c436dcae86c3",
+    "stages/02_shape_encoder/stage.py": "db7f344a0f91272d672e8e05ba4bbadd193889ccf2c1c3d4a381623b12cae4c7",
+    "stages/03_boundary_specialist/stage.py": "aea5c09ce72807afadad8397e3a9e0a8f24822d1e115e6baa599aba3f932b40e",
+    "stages/04_augmented_shape_encoder/stage.py": "cae59e8244892a18b2805c4ee0ec0ef6ab75d5392dc33174369a42d115bc9710",
+    "stages/06_directional_specialist/stage.py": "8be1b35819c914baffa0a6bf06c176541fd3bda7c7fb559d79b3135486c4cfa4",
+    "stages/07_neighborhood_router/stage.py": "09f882f580186520ac5c27876f69e4c31fe85773adf905169004ae63295655ca",
+    "stages/08_class_calibration/stage.py": "d7f79c3594e0a06856f7c88cb558963d6b02547e8965977acc4d65d165c7d27f",
+    "stages/09_context_encoder/stage.py": "95e404245a76ff55b4ad3b36bb6b6f8115290fdfe841bf61a8970a0479151a83",
+    "stages/10_context_refinement/stage.py": "de524b65ea01ce4cedc67b92e811a41332d71b98fe079acc7037b4073ff6d18e",
+    "stages/11_probability_ensemble/stage.py": "8609311f1771e711a5038d27c21bf115669ec65d0aa86da2e92c7214b5c1891a",
+    "stages/12_material_context_fusion/stage.py": "691757bce7a27ab546a0d954057af5715a252c4eb4c43ea0e97f931b3fcd2b6e",
+    "stages/13_high_resolution_context/stage.py": "b71d965e4307e4840e6ea0290a6b37bd5805658e1c616625a3ee78166d349d7e",
+    "stages/14_high_resolution_gate/stage.py": "eb0f8fcb9d91474065c46eb89760132b560bde5dfa1cbe6bc9e0d3d78c980cd6",
+    "stages/15_semantic_consensus/stage.py": "9b684de78f7fc255ea5441ca5134353f634ba52bda47b9d4b94d181e433544d2",
+    "stages/16_boundary_consensus/stage.py": "4dccdb2cb6facc41224c1071c0d3eb4b7a8d4a50ccb05b0df062fadae1cafb8f",
+    "stages/17_multiview_features/stage.py": "0e6f870f849f0b34fdee52ff4ab915027427c140205db8c671423ef8f655d3ed",
+    "stages/18_oof_decision_router/stage.py": "e3a5f4734879513f1166e358b26249bcd15cf2b192d54fef4b576c787a7a9e1b",
+    "stages/19_hierarchical_patch_experts/stage.py": "ab681baeba67a55c9908198ec030308636ae35211abb7f1392daae9b15067b8a",
+    "stages/20_hierarchical_patch_consensus/stage.py": "21b20f0fcef9c2b9ef3f5bfe32aa0f2ce7ba2c166e17ee610b28e80474bab613"
+  },
+  "shared_sources": [
+    {
+      "source": "../../architecture_runtime.py",
+      "destination": "expert_runtime.py",
+      "sha256": "4d8724a62430e091825a2e23039b9ae02e4e097506ac660d13fb2bed0978f51f"
+    }
+  ],
+  "stages": [
+    {
+      "name": "prepare_official_data",
+      "command": [
+        "modal",
+        "run",
+        "modal_backbone_app.py::prepare_manifest"
+      ],
+      "expected": null
+    },
+    {
+      "name": "train_material_encoder",
+      "command": [
+        "modal",
+        "run",
+        "stages/01_material_encoder/stage.py",
+        "--action",
+        "all",
+        "--output-dir",
+        "artifacts/material_encoder",
+        "--force"
+      ],
+      "expected": "artifacts/material_encoder/submission_convnextv2_finetuned.csv"
+    },
+    {
+      "name": "train_shape_encoder",
+      "command": [
+        "modal",
+        "run",
+        "stages/02_shape_encoder/stage.py",
+        "--action",
+        "all",
+        "--output-dir",
+        "artifacts/shape_encoder",
+        "--force"
+      ],
+      "expected": "artifacts/shape_encoder/submission_dinov3_convnext_finetuned.csv"
+    },
+    {
+      "name": "train_boundary_specialist",
+      "command": [
+        "modal",
+        "run",
+        "stages/03_boundary_specialist/stage.py",
+        "--action",
+        "hard-negative",
+        "--force"
+      ],
+      "expected": "artifacts/boundary_specialist/test_probabilities.npz"
+    },
+    {
+      "name": "train_augmented_shape_encoder",
+      "command": [
+        "modal",
+        "run",
+        "stages/04_augmented_shape_encoder/stage.py",
+        "--action",
+        "train",
+        "--output-dir",
+        "artifacts/augmented_shape_encoder",
+        "--force"
+      ],
+      "expected": "artifacts/augmented_shape_encoder/training_metrics.json"
+    },
+    {
+      "name": "infer_augmented_shape_encoder",
+      "command": [
+        "modal",
+        "run",
+        "stages/04_augmented_shape_encoder/stage.py",
+        "--action",
+        "infer",
+        "--output-dir",
+        "artifacts/augmented_shape_encoder"
+      ],
+      "expected": "artifacts/augmented_shape_encoder/test_probabilities.npz"
+    },
+    {
+      "name": "train_directional_specialist",
+      "command": [
+        "modal",
+        "run",
+        "stages/06_directional_specialist/stage.py",
+        "--output-dir",
+        "artifacts/directional_specialist",
+        "--force"
+      ],
+      "expected": "artifacts/directional_specialist/test_probabilities.npz"
+    },
+    {
+      "name": "build_neighborhood_router",
+      "command": [
+        "modal",
+        "run",
+        "stages/07_neighborhood_router/stage.py",
+        "--output-dir",
+        "artifacts/neighborhood_router",
+        "--force"
+      ],
+      "expected": "artifacts/neighborhood_router/test_probabilities.npz"
+    },
+    {
+      "name": "calibrate_class_boundary",
+      "command": [
+        "modal",
+        "run",
+        "stages/08_class_calibration/stage.py",
+        "--output-dir",
+        "artifacts/class_calibration",
+        "--force"
+      ],
+      "expected": "artifacts/class_calibration/test_probabilities.npz"
+    },
+    {
+      "name": "train_context_encoder",
+      "command": [
+        "modal",
+        "run",
+        "stages/09_context_encoder/stage.py",
+        "--output-dir",
+        "artifacts/context_encoder",
+        "--force"
+      ],
+      "expected": "artifacts/context_encoder/test_probabilities.npz"
+    },
+    {
+      "name": "refine_context_encoder",
+      "command": [
+        "modal",
+        "run",
+        "stages/10_context_refinement/stage.py",
+        "--output-dir",
+        "artifacts/context_refinement",
+        "--force"
+      ],
+      "expected": "artifacts/context_refinement/test_probabilities.npz"
+    },
+    {
+      "name": "build_probability_ensemble",
+      "command": [
+        "{python}",
+        "stages/11_probability_ensemble/stage.py",
+        "--output-dir",
+        "artifacts/probability_ensemble"
+      ],
+      "expected": "artifacts/probability_ensemble/test_probabilities.npz"
+    },
+    {
+      "name": "build_material_context_fusion",
+      "command": [
+        "modal",
+        "run",
+        "stages/12_material_context_fusion/stage.py",
+        "--action",
+        "all",
+        "--output-dir",
+        "artifacts/material_context_fusion",
+        "--force"
+      ],
+      "expected": "artifacts/material_context_fusion/test_probabilities.npz"
+    },
+    {
+      "name": "train_high_resolution_context",
+      "command": [
+        "modal",
+        "run",
+        "stages/13_high_resolution_context/stage.py",
+        "--output-dir",
+        "artifacts/high_resolution_context",
+        "--force"
+      ],
+      "expected": "artifacts/high_resolution_context/test_probabilities.npz"
+    },
+    {
+      "name": "refine_high_resolution_context",
+      "command": [
+        "modal",
+        "run",
+        "stages/14_high_resolution_gate/stage.py",
+        "--output-dir",
+        "artifacts/high_resolution_gate",
+        "--force"
+      ],
+      "expected": "artifacts/high_resolution_gate/test_probabilities.npz"
+    },
+    {
+      "name": "build_semantic_consensus",
+      "command": [
+        "{python}",
+        "stages/15_semantic_consensus/stage.py",
+        "--output-dir",
+        "artifacts/semantic_consensus"
+      ],
+      "expected": "artifacts/semantic_consensus/test_probabilities.npz"
+    },
+    {
+      "name": "build_boundary_consensus",
+      "command": [
+        "modal",
+        "run",
+        "stages/16_boundary_consensus/stage.py",
+        "--output-dir",
+        "artifacts/boundary_consensus",
+        "--force"
+      ],
+      "expected": "artifacts/boundary_consensus/test_probabilities.npz"
+    },
+    {
+      "name": "extract_multiview_features",
+      "command": [
+        "modal",
+        "run",
+        "stages/17_multiview_features/stage.py",
+        "--output-dir",
+        "artifacts/multiview_features",
+        "--force"
+      ],
+      "expected": "artifacts/multiview_features/test_probabilities.npz"
+    },
+    {
+      "name": "fit_oof_decision_router",
+      "command": [
+        "{python}",
+        "stages/18_oof_decision_router/stage.py"
+      ],
+      "expected": "stages/18_oof_decision_router/submission_final_router.csv"
+    },
+    {
+      "name": "train_hierarchical_patch_experts",
+      "command": [
+        "modal",
+        "run",
+        "stages/19_hierarchical_patch_experts/stage.py",
+        "--output-dir",
+        "artifacts/hierarchical_patch_experts"
+      ],
+      "expected": "artifacts/hierarchical_patch_experts/patch_mil_test_probabilities.npz"
+    },
+    {
+      "name": "build_hierarchical_patch_consensus",
+      "command": [
+        "{python}",
+        "stages/20_hierarchical_patch_consensus/stage.py",
+        "--output-dir",
+        "artifacts/hierarchical_patch_consensus"
+      ],
+      "expected": "artifacts/hierarchical_patch_consensus/submission_final_expert_consensus.csv"
+    }
+  ],
+  "model_files": [
+    {
+      "name": "convnextv2",
+      "remote": "runs/convnextv2_large_full_finetune_224_seed2026/final_model.pt"
+    },
+    {
+      "name": "dinov3_convnext",
+      "remote": "runs/dinov3_convnext_large_full_finetune_224_seed2026/final_model.pt"
+    },
+    {
+      "name": "dinov3_hard_negative",
+      "remote": "runs/dinov3_convnext_large_full_finetune_224_seed2026/ablations/hard_negative/final_model.pt"
+    },
+    {
+      "name": "dinov3_bdc_aug",
+      "remote": "runs/dinov3_convnext_large_bdc_augmentation_224_seed2026/final_model.pt"
+    },
+    {
+      "name": "dinov3_directional",
+      "remote": "runs/dinov3_convnext_large_directional_hard_negative_seed2026/final_model.pt"
+    },
+    {
+      "name": "context_encoder",
+      "remote": "runs/context_encoder_seed2026/final_model.pt"
+    },
+    {
+      "name": "context_refinement",
+      "remote": "runs/context_refinement_seed2026/final_model.pt"
+    },
+    {
+      "name": "high_resolution_context",
+      "remote": "runs/high_resolution_context_encoder_seed2026/final_model.pt"
+    },
+    {
+      "name": "high_resolution_gate",
+      "remote": "runs/high_resolution_context_gate_seed2026/final_model.pt"
+    },
+    {
+      "name": "hierarchical_siglip2_fold0",
+      "remote": "final01_clean_experts_v1/hierarchical_siglip2_full5fold_seed2026/siglip2_fold0_multi.pt"
+    },
+    {
+      "name": "hierarchical_siglip2_fold1",
+      "remote": "final01_clean_experts_v1/hierarchical_siglip2_full5fold_seed2026/siglip2_fold1_multi.pt"
+    },
+    {
+      "name": "hierarchical_siglip2_fold2",
+      "remote": "final01_clean_experts_v1/hierarchical_siglip2_full5fold_seed2026/siglip2_fold2_multi.pt"
+    },
+    {
+      "name": "hierarchical_siglip2_fold3",
+      "remote": "final01_clean_experts_v1/hierarchical_siglip2_full5fold_seed2026/siglip2_fold3_multi.pt"
+    },
+    {
+      "name": "hierarchical_siglip2_fold4",
+      "remote": "final01_clean_experts_v1/hierarchical_siglip2_full5fold_seed2026/siglip2_fold4_multi.pt"
+    },
+    {
+      "name": "patch_mil_siglip2_fold0",
+      "remote": "final01_clean_experts_v1/hierarchical_patch_mil_siglip2_full5fold_seed2026/siglip2_patch_mil_fold0.pt"
+    },
+    {
+      "name": "patch_mil_siglip2_fold1",
+      "remote": "final01_clean_experts_v1/hierarchical_patch_mil_siglip2_full5fold_seed2026/siglip2_patch_mil_fold1.pt"
+    },
+    {
+      "name": "patch_mil_siglip2_fold2",
+      "remote": "final01_clean_experts_v1/hierarchical_patch_mil_siglip2_full5fold_seed2026/siglip2_patch_mil_fold2.pt"
+    },
+    {
+      "name": "patch_mil_siglip2_fold3",
+      "remote": "final01_clean_experts_v1/hierarchical_patch_mil_siglip2_full5fold_seed2026/siglip2_patch_mil_fold3.pt"
+    },
+    {
+      "name": "patch_mil_siglip2_fold4",
+      "remote": "final01_clean_experts_v1/hierarchical_patch_mil_siglip2_full5fold_seed2026/siglip2_patch_mil_fold4.pt"
+    }
+  ]
+}

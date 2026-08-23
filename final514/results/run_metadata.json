@@ -1,0 +1,18 @@
+{
+  "started_at_utc": "2026-07-30T01:51:08.114683+00:00",
+  "finished_at_utc": "2026-07-30T03:09:47.032647+00:00",
+  "python": "3.11.5",
+  "platform": "Linux-4.19.0-gvisor-x86_64-with-glibc2.35",
+  "torch": "2.8.0+cu128",
+  "cuda": "12.8",
+  "transformers": "4.56.2",
+  "scikit_learn": "1.7.2",
+  "numpy": "2.2.6",
+  "pandas": "2.3.2",
+  "gpu_names": [
+    "NVIDIA A100-SXM4-40GB"
+  ],
+  "seed": 2026,
+  "model_id": "google/siglip2-so400m-patch16-naflex",
+  "model_revision": "cc24074f717b612951c2dead130904ab9b65a81e"
+}

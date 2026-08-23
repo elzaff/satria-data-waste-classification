@@ -1,0 +1,17 @@
+{
+  "model": "google/siglip2-so400m-patch16-naflex",
+  "revision": "cc24074f717b612951c2dead130904ab9b65a81e",
+  "max_num_patches": 256,
+  "seed": 2026,
+  "modal_gpu": "A100-40GB",
+  "modal_profile": "berlianasrlta",
+  "manifest_changes": 514,
+  "feature_label_changes": 259,
+  "head": "balanced logistic regression; C dipilih saat run",
+  "head_candidates": [0.1, 0.2, 0.3, 0.5, 0.75, 1.0],
+  "head_selection": "Fold-0 validation; error paling sedikit, log-loss terendah, macro-F1 tertinggi, C terkecil",
+  "calibration": null,
+  "gate": null,
+  "ensemble": null,
+  "data_ablation": null
+}

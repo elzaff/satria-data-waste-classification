@@ -1,0 +1,7 @@
+{"timestamp_utc": "2026-07-30T02:40:16.461455+00:00", "phase": "head", "epoch": 1, "train_loss": 0.4803139779203557, "errors": 93, "macro_f1": 0.9844310900113635}
+{"timestamp_utc": "2026-07-30T02:44:34.148057+00:00", "phase": "head", "epoch": 2, "train_loss": 0.28499046219463225, "errors": 89, "macro_f1": 0.9851807430831157}
+{"timestamp_utc": "2026-07-30T02:48:47.271614+00:00", "phase": "partial", "epoch": 1, "train_loss": 0.24803490582889545, "errors": 60, "macro_f1": 0.9900843188896676}
+{"timestamp_utc": "2026-07-30T02:53:03.334592+00:00", "phase": "partial", "epoch": 2, "train_loss": 0.2206316651953138, "errors": 46, "macro_f1": 0.992302493682318}
+{"timestamp_utc": "2026-07-30T02:57:43.076476+00:00", "phase": "partial", "epoch": 3, "train_loss": 0.21080882241894575, "errors": 50, "macro_f1": 0.991713775807603}
+{"timestamp_utc": "2026-07-30T03:02:07.408282+00:00", "phase": "partial", "epoch": 4, "train_loss": 0.20800111004702193, "errors": 47, "macro_f1": 0.9921552964012893}
+{"timestamp_utc": "2026-07-30T03:06:20.406150+00:00", "phase": "audited_material_continuation", "epoch": 1, "train_loss": 0.21216316705509847, "audited_train_rows": 291, "errors": 48, "macro_f1": 0.9920074798748052}
