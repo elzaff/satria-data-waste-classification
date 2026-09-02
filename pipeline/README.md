@@ -1,5 +1,10 @@
 # Ambiguity-aware multi-expert pipeline
 
+This folder contains the reproducible, leakage-safe pipeline. The repository
+also includes the lightweight `submission_template.csv` and shared
+`architecture_runtime.py`, so the source tree can be validated without the
+original local `FINAL/` directory.
+
 `pipeline.py` mereproduksi satu recipe dari pretrained weights publik dan data
 resmi sampai `submission_final01.csv`. Nama eksperimen historis tidak menjadi
 bagian metode. Implementasi teknis tetap dipisah agar setiap model dapat diaudit,
@@ -155,19 +160,19 @@ Prasyarat Modal: Volume `bdc2026-data`, Volume `bdc2026-model-cache`, dan Secret
 `huggingface-secret`.
 
 ```powershell
-python FINAL/01/clean/pipeline.py --profile honeylim3sour
+python pipeline/pipeline.py --profile <modal-profile>
 ```
 
 Resume setelah koneksi terputus:
 
 ```powershell
-python FINAL/01/clean/pipeline.py --profile honeylim3sour --resume
+python pipeline/pipeline.py --profile <modal-profile> --resume
 ```
 
 Audit DAG tanpa GPU:
 
 ```powershell
-python FINAL/01/clean/pipeline.py --profile honeylim3sour --dry-run
+python pipeline/pipeline.py --profile <modal-profile> --dry-run
 ```
 
 Default hanya mengunduh artefak ringan. Tambahkan `--download-models` saat
@@ -176,9 +181,9 @@ checkpoint final memang diperlukan.
 ## Inference dari artefak sendiri
 
 ```powershell
-python FINAL/01/clean/inference.py `
-  --artifact-root FINAL/01/clean/workspace/rebuild `
-  --output-dir FINAL/01/clean/outputs/artifact_inference
+python pipeline/inference.py `
+  --artifact-root pipeline/workspace/rebuild `
+  --output-dir pipeline/outputs/artifact-inference
 ```
 
 Inference ini mem-fit ulang decision layer secara deterministik dari probabilitas

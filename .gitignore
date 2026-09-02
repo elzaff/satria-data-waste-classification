@@ -18,3 +18,7 @@ submissions/
 *.pkl
 *.npy
 *.npz
+pipeline/workspace/
+pipeline/outputs/
+pipeline/final_models/
+*.tmp

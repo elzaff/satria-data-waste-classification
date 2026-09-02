@@ -1,4 +1,4 @@
-"""Clean, standalone FINAL/01 training and inference entrypoint.
+"""Clean, standalone training and inference entrypoint.
 
 Semantic stage modules live beside this orchestrator. Pipeline starts from
 public pretrained weights and official data. It reads no historical experiment
@@ -23,7 +23,7 @@ SCRIPT = Path(__file__).resolve()
 PACKAGE_ROOT = SCRIPT.parent
 MANIFEST_PATH = PACKAGE_ROOT / "pipeline_manifest.json"
 DEFAULT_WORKSPACE = PACKAGE_ROOT / "workspace" / "rebuild"
-DEFAULT_TEMPLATE = SCRIPT.parents[3] / "BDC2026" / "submission.csv"
+DEFAULT_TEMPLATE = PACKAGE_ROOT / "submission_template.csv"
 
 
 def sha256(path: Path) -> str:
@@ -284,7 +284,7 @@ def finalize(
             "completed_at_unix": time(),
         },
     )
-    print(f"\nFINAL/01 complete: {final}")
+    print(f"\nPipeline complete: {final}")
     return final
 
 

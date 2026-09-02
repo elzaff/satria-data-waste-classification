@@ -29,13 +29,13 @@ Urutan ranking validation:
 
 ```powershell
 modal profile activate berlianasrlta
-modal run --detach "SATRIA DATA - EKSPERIMEN/evidence/18_naflex_audit514_error_logloss/modal_pipeline.py"
+modal run --detach experiments/final514/modal_pipeline.py --output-dir experiments/final514/results
 ```
 
 Clean ulang root khusus recipe ini:
 
 ```powershell
-modal run --detach "SATRIA DATA - EKSPERIMEN/evidence/18_naflex_audit514_error_logloss/modal_pipeline.py" --force
+modal run --detach experiments/final514/modal_pipeline.py --force --output-dir experiments/final514/results
 ```
 
 Artefak besar tersimpan pada volume `bdc2026-model-cache` di:
@@ -43,6 +43,12 @@ Artefak besar tersimpan pada volume `bdc2026-model-cache` di:
 `/last_hope_final_naflex_audited514_error_logloss_balancedlr_a100_ajeng`
 
 Artefak ringan otomatis masuk folder `results`.
+
+Render ulang contact sheet dari dataset lokal (dataset tidak disimpan di repo):
+
+```powershell
+python experiments/final514/make_swap_contact_sheets.py --data-root <path-to-BDC2026>
+```
 
 ## Hasil clean run 30 Juli 2026
 

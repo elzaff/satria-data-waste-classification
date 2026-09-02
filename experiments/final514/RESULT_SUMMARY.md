@@ -2,6 +2,10 @@
 
 ## Identitas run
 
+Recipe ini adalah single-model benchmark yang disimpan sebagai artefak
+eksperimen. Untuk pipeline multi-expert yang dapat dijalankan ulang, lihat
+[`pipeline/README.md`](../../pipeline/README.md).
+
 - Tanggal: 30 Juli 2026.
 - Modal profile: `berlianasrlta`.
 - App ID: `ap-MFJZa8nbIW2v2h4vDt5U4s`.

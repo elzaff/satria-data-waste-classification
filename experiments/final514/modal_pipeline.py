@@ -1520,7 +1520,7 @@ def train_clean(force: bool = False):
 
 
 @app.local_entrypoint()
-def main(force: bool = False, output_dir: str = "LAST HOPE FINAL/SigLIP2 NaFlex Audited514 ErrorLogLoss BalancedLR A100 Ajeng/results"):
+def main(force: bool = False, output_dir: str = "experiments/final514/results"):
     result = train_clean.remote(force=force)
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)

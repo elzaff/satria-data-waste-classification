@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import csv
 import re
 from pathlib import Path
@@ -8,9 +9,8 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 
 HERE = Path(__file__).resolve().parent
-WORKSPACE = HERE.parents[1]
+DEFAULT_DATA_ROOT = HERE.parents[2] / "BDC2026"
 CHANGES = HERE / "results" / "manifest_changes.csv"
-TRAIN = WORKSPACE / "BDC2026" / "train"
 OUTPUT = HERE / "swap_contact_sheets"
 
 CLASS_NAMES = {0: "Recyclable", 1: "Electronic", 2: "Organic"}
@@ -24,8 +24,8 @@ def natural_key(filename: str) -> tuple[str, int]:
     return (match.group(1).upper(), int(match.group(2))) if match else (filename, -1)
 
 
-def image_index() -> dict[str, Path]:
-    return {path.name: path for path in TRAIN.rglob("*") if path.is_file()}
+def image_index(train_root: Path) -> dict[str, Path]:
+    return {path.name: path for path in train_root.rglob("*") if path.is_file()}
 
 
 def load_changes() -> list[dict[str, object]]:
@@ -112,8 +112,20 @@ def draw_sheet(
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Render contact sheets for audited label changes.")
+    parser.add_argument(
+        "--data-root",
+        type=Path,
+        default=DEFAULT_DATA_ROOT,
+        help="Directory containing the BDC2026/train folder.",
+    )
+    args = parser.parse_args()
+    train_root = args.data_root.resolve() / "train"
+    if not train_root.is_dir():
+        raise FileNotFoundError(f"Missing train directory: {train_root}")
+
     changes = load_changes()
-    paths = image_index()
+    paths = image_index(train_root)
     missing = sorted({row["filename"] for row in changes} - paths.keys())
     if missing:
         raise FileNotFoundError(f"Missing swapped images: {missing}")

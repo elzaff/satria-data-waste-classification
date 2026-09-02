@@ -1,4 +1,4 @@
-"""Rebuild exact FINAL/01 decision layer from saved probability artifacts.
+"""Rebuild the decision layer from saved probability artifacts.
 
 This script does not read test labels and does not run vision backbones. It
 re-fits the deterministic five-fold logistic router from official validation
@@ -162,7 +162,7 @@ def main() -> None:
 
     final_metrics = json.loads((output_dir / "metrics.json").read_text(encoding="utf-8"))
     summary = {
-        "method": "FINAL/01 artifact-based decision-layer inference",
+        "method": "Artifact-based decision-layer inference",
         "artifact_root": str(artifact_root),
         "test_labels_used": False,
         "seed": 2026,
