@@ -40,4 +40,5 @@ Artefak ringan berada di `results/`. Checkpoint dan embedding penuh berada di Mo
 
 `/last_hope_final_naflex_audited514_error_logloss_balancedlr_a100_ajeng`
 
-Seluruh 514 gambar audit tersedia dalam 20 halaman pada `swap_contact_sheets/`.
+Seluruh 514 perubahan audit tercatat pada `manifest_changes.csv`; contact sheet
+tidak disertakan dalam repository.

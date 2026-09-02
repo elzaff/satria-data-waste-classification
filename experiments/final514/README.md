@@ -44,16 +44,11 @@ Artefak besar tersimpan pada volume `bdc2026-model-cache` di:
 
 Artefak ringan otomatis masuk folder `results`.
 
-Render ulang contact sheet dari dataset lokal (dataset tidak disimpan di repo):
-
-```powershell
-python experiments/final514/make_swap_contact_sheets.py --data-root <path-to-BDC2026>
-```
-
 ## Hasil clean run 30 Juli 2026
 
 - `C=0.2`, dipilih otomatis oleh validation.
 - Validation: 42 error, Macro-F1 `0.9935154626`.
 - Evaluasi lokal pasca-run: 0 error dari 1.458 gambar.
 - Single model; tanpa calibration, gate, atau ensemble.
-- Seluruh 514 perubahan dapat diperiksa pada `swap_contact_sheets/`.
+- Seluruh 514 perubahan tercatat pada `results/manifest_changes.csv`.
+- Contact sheet sengaja tidak disertakan dalam repository.

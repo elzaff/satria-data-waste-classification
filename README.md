@@ -67,8 +67,8 @@ Clean retrain Final514 menyimpan dua manifest:
 
 Setiap perubahan dicatat di
 [`experiments/final514/results/manifest_changes.csv`](experiments/final514/results/manifest_changes.csv)
-dan divisualisasikan pada `swap_contact_sheets/`. Tidak ada perubahan yang
-dipilih berdasarkan label test.
+sebagai audit tekstual. Contact sheet tidak disimpan di repository agar clone
+tetap ringan. Tidak ada perubahan yang dipilih berdasarkan label test.
 
 ### 3. Encoder visual dan preprocessing
 
@@ -175,8 +175,7 @@ Foldering dipisah berdasarkan fungsi supaya root GitHub tetap mudah dibaca:
         ├── modal_pipeline.py       # clean retrain single-model
         ├── recipe.json
         ├── RESULT_SUMMARY.md
-        ├── results/                 # artefak ringan + metrics
-        └── swap_contact_sheets/     # bukti 514 perubahan label
+        └── results/                 # artefak ringan + audit + metrics
 ```
 
 `pipeline/workspace/`, `pipeline/outputs/`, dan `pipeline/final_models/`
