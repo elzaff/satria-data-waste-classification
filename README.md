@@ -25,23 +25,12 @@ hanya regression check setelah recipe dipilih, bukan input pemilihan model.
 
 ## Leaderboard BDC Satria Data
 
-Tabel berikut menyalin delapan baris yang terlihat pada screenshot klasemen
-yang diberikan untuk dokumentasi repo. Koma desimal dipertahankan seperti pada
-sumber. Ini adalah snapshot, bukan data leaderboard live.
+Snapshot klasemen BDC Satria Data yang diberikan:
 
-| Peringkat | Kode kelompok | Perguruan tinggi | Jumlah unggah | Skor | Waktu unggah | Wilayah LLDikti | Jenis |
-|---:|---|---|---:|---:|---|---:|---|
-| 1 | SD2026040000331 | Universitas Indonesia | 3 | 100,0000 | 2026-07-19 18.59.49 | 3 | Penyisihan |
-| 2 | SD2026040000363 | Universitas Indonesia | 2 | 100,0000 | 2026-07-19 16.36.01 | 3 | Penyisihan |
-| 3 | SD2026040000374 | Universitas Indonesia | 3 | 100,0000 | 2026-07-19 19.18.50 | 3 | Penyisihan |
-| **4** | **SD2026040000100** | **Institut Teknologi Sepuluh Nopember** | **3** | **100,0000** | **2026-07-31 00.04.14** | **7** | **Penyisihan** |
-| 5 | SD2026040000292 | Universitas Telkom | 3 | 100,0000 | 2026-07-31 21.20.05 | 4 | Penyisihan |
-| 6 | SD2026040000303 | Universitas Telkom | 3 | 99,9463 | 2026-07-30 23.09.08 | 4 | Penyisihan |
-| 7 | SD2026040000027 | Institut Teknologi Sepuluh Nopember | 3 | 99,9462 | 2026-07-29 18.56.11 | 7 | Penyisihan |
-| 8 | SD2026040000354 | Universitas Diponegoro | 3 | 99,9462 | 2026-07-31 00.45.21 | 6 | Penyisihan |
+![Snapshot leaderboard BDC Satria Data 2026](docs/leaderboard-bdc.png)
 
-Baris peringkat 4 ditandai karena merupakan tim ITS yang terlihat pada
-screenshot. Klasemen ini tidak dipakai untuk melatih atau memilih model.
+Klasemen ini merupakan dokumentasi dari screenshot, bukan data leaderboard
+live, dan tidak dipakai untuk melatih atau memilih model.
 
 ## Metodologi
 
